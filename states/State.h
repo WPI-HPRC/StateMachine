@@ -1,46 +1,43 @@
-/*
-Looking to utilize a polymorphic state machine for the following reasons: 
-1. Modular 
-2. Good for complex system behavoir such as sensor readings for each state 
-3. Adding new states doesn't affect other states 
-*/
+#include "../Context.h"  // Include the Context struct
+#include "stdint.h"   // Include for fixed-width integer types
 
 /**
- * @brief Abstract Class Representing Rocket State 
+ * @brief State class represents a single state in the state machine.
+ * 
+ * This class serves as an abstract base class for all states in the system. 
+ * Specific states (e.g., PreLaunch, Launch) should derive from this class 
+ * and implement the `setup()`, `loop()`, and `exit()` methods.
  */
 class State { 
-    public: 
-        virtual ~State();                      //Deconstructor
-        virtual void enter() = 0;              //Use to initialize variables (like setup in arduino)
-        virtual void update() = 0;             //Where most code will be (like loop arduino)
-        virtual void exit() = 0;               //Shut things off / free memory
+private: 
+    Context* ctx;                 //Store sensor data 
+    uint64_t startTime;       //get the current time 
+    uint64_t currentTime;     //get the starting time 
 
-        static void setState(State* newState); //This is where state transitions will be called 
+public: 
+    virtual ~State() = default;
 
-        static State* current;  // Keeps track of the current state
-        static State* PreLaunch;
-        static State* Launch;
-        static State* Coast;
-        static State* DrogueDescent;
-        static State* MainDescent;
-        static State* Recovery;
-        static State* Abort;
-        //Utility::TelemPacket telemPacket;  
-    protected: 
-        State();                                     //Constructor    
-        long long currentTime = 0;
-        long long deltaTime = 0;
-        long long startTime = 0;
+    State(Context *ctx) {
+        this->ctx = ctx;  // Initialize the context pointer
+        this->startTime = 0;  // Set the initial value of startTime
+        this->currentTime = 0;  // Set the initial value of currentTime
+    }
 
-    private: 
-        virtual void enter_impl() = 0;              //Entering state (initializing variables)
-        virtual void update_impl() = 0;             //Operating in state (most of code goes )
-        virtual void exit_impl() = 0;               //Leave a state (free memory)
+    //Abstract methods for each state 
+    virtual void setup() = 0;                   // Initialize variables
+    virtual void loop() = 0;                    // Main logic for state
+    virtual void exit() = 0;                    // Cleanup before exiting state
 
+    static State* PreLaunch;
+    static State* Launch;
+    static State* Coast;
+    static State* DrogueDescent;
+    static State* MainDescent;
+    static State* Recovery;
+    static State* Abort;
 };
 
-// Definition of static members outside the class
-State* State::current = nullptr;
+// Initialize the static state pointers to nullptr
 State* State::PreLaunch = nullptr;
 State* State::Launch = nullptr;
 State* State::Coast = nullptr;
