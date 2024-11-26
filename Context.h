@@ -1,26 +1,30 @@
 #pragma once
 
-#define SENSOR_DATA(X) \
-  X(float, accelX, 1) \
-  X(bool, limitSwitch, 2) \
-
-#include <set>
+#include <any>
 #include <map>
-#include "UtilityCommand.h"
+#include <set>
 
 #define FIELD(typ, name, key) typ name;
-#define SENSOR_MAP(typ)
 #define KEY(typ, name, key) constexpr int name = key;
+#define GET(typ, name, key)                                                    \
+  template <> std::any get<key>() { return std::any(this->name); }
 
-// struct Ctx {
-//   template <typename T>
-//   T get(int id) {};
-// };
+template <typename T> struct Ctx {
+  template <int key> std::any get() { return ((T *)this)->template get<key>(); }
+};
 
-#define CREATE_CONTEXT(sensor_data) \
-  struct Context : public Ctx { \
-    sensor_data(FIELD); \
-    std::set<int> actuatorCmdPool; \
-    std::map<int, UtilityCommand *> utilityCmdPool; \
-  }; \
-  sensor_data(KEY);
+template <int key> struct Map {};
+
+#define CREATE_CONTEXT(sensor_data)                                            \
+  struct Context : public Ctx<Context> {                                       \
+    sensor_data(FIELD);                                                        \
+    std::set<int> actuatorCmdPool;                                             \
+    std::map<int, UtilityCommand> utilityCmdPool;                              \
+                                                                               \
+    template <int key> std::any get();                                         \
+    sensor_data(GET);                                                          \
+  };                                                                           \
+  sensor_data(KEY);                                                            \
+  GENERATE_CONDITIONS(Context);                                                \
+  GENERATE_UTILS();                                                            \
+  GENERATE_STATES();\

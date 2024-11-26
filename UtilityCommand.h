@@ -1,26 +1,32 @@
 #pragma once
 
 #include "Condition.h"
-struct UtilityCommand {
+
+struct IUtilityCommand {
   int id;
-  UtilityCommand(int id) : id(id) {}
+  IUtilityCommand(int id) : id(id) {}
 };
 
-struct TimerCommand : public UtilityCommand {
-  long startTime;
-  TimerCommand(int id, long time) : UtilityCommand(1 << 31 & id), startTime(time) {}
-};
+using UtilityCommand = Implementation<IUtilityCommand>;
 
-struct DebouncerCommand : public UtilityCommand {
-  int counts;
-  Condition *cond;
-  DebouncerCommand(int id, int counts, Condition *cond) : UtilityCommand(id), counts(counts), cond(cond) {}
-};
-
-struct Timer {
-  long timeRemaining;
-};
-
-struct Debouncer {
-  int loopsLeft;
-};
+#define GENERATE_UTILS()                                                       \
+  struct TimerCommand : public IUtilityCommand {                               \
+    long startTime;                                                            \
+    TimerCommand(int id, long time)                                            \
+        : IUtilityCommand(1 << 31 & id), startTime(time) {}                    \
+  };                                                                           \
+                                                                               \
+  struct DebouncerCommand : public IUtilityCommand {                           \
+    int counts;                                                                \
+    Condition cond;                                                            \
+    DebouncerCommand(int id, int counts, Condition const cond)                 \
+        : IUtilityCommand(id), counts(counts), cond(cond) {}                   \
+  };                                                                           \
+                                                                               \
+  struct Timer {                                                               \
+    long timeRemaining;                                                        \
+  };                                                                           \
+                                                                               \
+  struct Debouncer {                                                           \
+    int loopsLeft;                                                             \
+  };
