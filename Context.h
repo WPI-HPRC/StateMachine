@@ -27,4 +27,4 @@ template <int key> struct Map {};
   sensor_data(KEY);                                                            \
   GENERATE_CONDITIONS(Context);                                                \
   GENERATE_UTILS();                                                            \
-  GENERATE_STATES();\
+  GENERATE_STATES();

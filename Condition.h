@@ -3,6 +3,9 @@
 #include "Context.h"
 #include "Interface.h"
 
+/*
+Here we have to pass in the context type to implement Get
+*/
 #define GENERATE_CONDITIONS(C)                                                 \
   /* Forwared declare Condition and Validator */                               \
   template <typename T> struct IValuator {                                     \
