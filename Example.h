@@ -1,11 +1,12 @@
 #include "State.h"
 #include "Context.h"
 
-#define SENSOR_DATA(X)                                                         \
-  X(float, accelX, 1)                                                          \
-  X(bool, limitSwitch, 2)
+struct SensorData {
+  float accelX;
+  bool limitSwitch;
+};
 
-CREATE_CONTEXT(SENSOR_DATA);
+USE_SENSOR_DATA(SensorData);
 
 extern State PreLaunch;
 extern State Boost;
