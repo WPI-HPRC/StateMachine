@@ -3,31 +3,32 @@
 #include "Condition.h"
 #include "UtilityCommand.h"
 #include <initializer_list>
+#include <list>
 
 template <typename C> struct Transition;
 template <typename C> struct State;
 
 template <typename C> struct State {
-  std::initializer_list<Transition<C>> transitions;
+  std::list<Transition<C>> transitions;
 
-  State<C>(std::initializer_list<Transition<C>> transitions) : transitions(transitions) {}
+  State<C>(std::list<Transition<C>> transitions) : transitions(transitions) {}
 };
 
 template <typename C>
-State(std::initializer_list<Transition<C>>) -> State<C>;
+State(std::list<Transition<C>>) -> State<C>;
 
 template <typename C> struct Transition {
   Condition<C> cond;
-  std::initializer_list<int> actuatorPushCmds;
-  std::initializer_list<int> actuatorPopCmds;
-  std::initializer_list<UtilityCommand> utilityPushCmds;
-  std::initializer_list<int> utilityPopCmds;
+  std::list<int> actuatorPushCmds;
+  std::list<int> actuatorPopCmds;
+  std::list<UtilityCommand> utilityPushCmds;
+  std::list<int> utilityPopCmds;
   State<C> *targetState;
 
-  Transition<C>(Condition<C> cond, std::initializer_list<int> actuatorPushCmds,
-                std::initializer_list<int> actuatorPopCmds,
-                std::initializer_list<UtilityCommand> utilityPushCmds,
-                std::initializer_list<int> utilityPopCmds,
+  Transition<C>(Condition<C> cond, std::list<int> actuatorPushCmds,
+                std::list<int> actuatorPopCmds,
+                std::list<UtilityCommand> utilityPushCmds,
+                std::list<int> utilityPopCmds,
                 State<C> *targetState)
       : cond(cond), actuatorPushCmds(actuatorPushCmds),
         actuatorPopCmds(actuatorPopCmds), utilityPushCmds(utilityPushCmds),
@@ -35,37 +36,37 @@ template <typename C> struct Transition {
 };
 
 template <typename C>
-Transition(ICondition<C>, std::initializer_list<int>,
-           std::initializer_list<int>, std::initializer_list<UtilityCommand>,
-           std::initializer_list<int>, State<C> *) -> Transition<C>;
+Transition(ICondition<C>, std::list<int>,
+           std::list<int>, std::list<UtilityCommand>,
+           std::list<int>, State<C> *) -> Transition<C>;
 
 template <typename C> struct TransitionBuilder {
   Condition<C> cond;
-  std::initializer_list<int> actuatorPushCmds;
-  std::initializer_list<int> actuatorPopCmds;
-  std::initializer_list<UtilityCommand> utilityPushCmds;
-  std::initializer_list<int> utilityPopCmds;
+  std::list<int> actuatorPushCmds;
+  std::list<int> actuatorPopCmds;
+  std::list<UtilityCommand> utilityPushCmds;
+  std::list<int> utilityPopCmds;
   State<C> *targetState;
 
   TransitionBuilder<C>(Condition<C> cond, State<C> *targetState)
       : cond(cond),targetState(targetState) {}
 
-  public TransitionBuilder<typename C> setActuatorPushCmds(std::initializer_list<int> actuatorPushCmds){
+  public TransitionBuilder<typename C> setActuatorPushCmds(std::list<int> actuatorPushCmds){
     this->actuatorPushCmds = actuatorPushCmds;
     return this;
   }
 
-  public TransitionBuilder<typename C> setActuatorPopCmds(std::initializer_list<int> actuatorPopCmds){
+  public TransitionBuilder<typename C> setActuatorPopCmds(std::list<int> actuatorPopCmds){
     this->actuatorPopCmds = actuatorPopCmds;
     return this;
   }
 
-  public TransitionBuilder<typename C> setUtilityPushCmds(std::initializer_list<UtilityCommand> utilityPushCmds){
+  public TransitionBuilder<typename C> setUtilityPushCmds(std::list<UtilityCommand> utilityPushCmds){
     this->utilityPushCmds = utilityPushCmds;
     return this;
   }
 
-  public TransitionBuilder<typename C> setUtilityPopCmds(std::initializer_list<UtilityCommand> utilityPopCmds){
+  public TransitionBuilder<typename C> setUtilityPopCmds(std::list<UtilityCommand> utilityPopCmds){
     this->utilityPopCmds = utilityPopCmds;
     return this;
   }

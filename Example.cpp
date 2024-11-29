@@ -13,7 +13,7 @@ State PreLaunch({
     &Boost
   ),
     new TransitionBuilder(
-    LessThan(Value<int>(12), Value<int>(14)), 
+    And(Value<bool>(true), Value<bool>(false)), 
     &Boost
     )
     .setUtilityPushCmds(
