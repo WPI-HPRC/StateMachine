@@ -1,26 +1,19 @@
 #include "Example.h"
+#include "Condition.h"
+#include "ActuatorCommands.h"
+#include "UtilityCommands.h"
+
+CONDITION(mymaincondition, AND(LESSTHAN(50, 1000), MORETHAN(50, 100)))
 
 State PreLaunch({
   Transition(
-    And(Value<bool>(true), Value<bool>(false)),
-    {},
-    {},
-    {
-      DebouncerCommand(1, 10,
-        LessThan(Get<float, accelX>(), Value<float>(200.f))),
-    },
-    {},
+     mymaincondition,
+    {openSolenoidsID},
+    {6},
+    {TimerCommand(11,12)},
+    {5},
     &Boost
-  ),
-    new TransitionBuilder(
-    And(Value<bool>(true), Value<bool>(false)), 
-    &Boost
-    )
-    .setUtilityPushCmds(
-      DebouncerCommand(1, 10,
-        LessThan(Get<float, accelX>(), Value<float>(200.f)))
-    )
-    .build()
+  )
 });
 // etc.
 // State Boost = {};

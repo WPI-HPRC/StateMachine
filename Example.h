@@ -1,5 +1,6 @@
 #include "Context.h"
 #include "State.h"
+#include "Condition.h"
 
 #define SENSOR_DATA(X)                                                         \
   X(float, accelX)                                                             \

@@ -4,6 +4,8 @@
 #include <map>
 #include <set>
 
+#undef KEY
+#undef MAP
 #define FIELD(typ, name) typ name;
 #define KEY(typ, name) constexpr int name = __COUNTER__;
 #define GET(typ, name)                                                         \
@@ -18,7 +20,7 @@ template <typename T> struct Ctx {
   struct Context : public Ctx<Context> {                                       \
     sensor_data(FIELD);                                                        \
     std::set<int> actuatorCmdPool;                                             \
-    std::map<int, UtilityCommand> utilityCmdPool;                              \
+    std::list<UtilityCommand> utilityCmdPool;                              \
                                                                                \
     template <int key> std::any get();                                         \
     sensor_data(GET);                                                          \
