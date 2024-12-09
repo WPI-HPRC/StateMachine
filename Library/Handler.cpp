@@ -1,8 +1,11 @@
 #include "Handler.h"
-#include "Context.h"
-#include <list>
 
-void Handler::HandleActuatorCommands(Context ctx){
+template <typename T>
+Handler::Handler(State<T> startingstate){
+this->currentState = startingstate;
+}
+
+void Handler::handleActuatorCommands(Context ctx){
     std::set<int> ActuatorCommandPool = ctx.actuatorCmdPool;
 
     for(int CommandID :  ActuatorCommandPool)
@@ -11,12 +14,18 @@ void Handler::HandleActuatorCommands(Context ctx){
     }
 }
 
-void Handler::HandleUtilityCommands(Context ctx){
+void Handler::handleUtilityCommands(Context ctx){
     std::list<UtilityCommand> UtilityCommandPool = ctx.utilityCmdPool;
 
     for( UtilityCommand Command  : UtilityCommandPool){
         UtilityCommandMap[Command.TypeID](Command);
     }
+}
+
+
+
+void Handler::handleStateTransitions(Context ctx){
+
 }
 
 void Handler::popCommands(Context ctx, std::list<int> actuatorIDs, std::list<int> utilityIDs){

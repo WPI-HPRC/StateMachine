@@ -6,11 +6,14 @@
      * @brief the state that comes a bit before launch
      */
     extern State<Context> PreLaunch;
+
      /**
-     * @brief the state that comes a bit before launch
+     * @brief Whoosh!
      */
     extern State<Context> Boost;
 
 // Self Righting Transitions ----------------------------------------------------------------------
+
+    
 // Planting Transitions ---------------------------------------------------------------------------
 
