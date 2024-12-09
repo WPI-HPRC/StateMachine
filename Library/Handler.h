@@ -1,8 +1,9 @@
+#pragma once
 #include "Context.h"
-#include "StateTransitions.h"
+#include "../User_Code/StateTransitions.h"
 #include "State.h"
 #include <list>
-
+#include <vector>
 class Handler{
     public:
     State<Context> currentState;
@@ -47,7 +48,7 @@ class Handler{
      * 
      * @param utilityIDs a list of the IDs of the utility commands to be popped
      */
-    void popCommands(Context ctx, std::list<int> actuatorIDs, std::list<int> utilityIDs);
+    void popCommands(Context ctx, std::vector<int> actuatorIDs, std::vector<int> utilityIDs);
 
       /**
      * @brief manually pushes specified actuator and utility commands
@@ -58,7 +59,7 @@ class Handler{
      * 
      * @param utilityCmds a list of the  Utility Commands to be pushed
      */
-    void pushCommands(Context ctx, std::list<int> actuatorIDs, std::list<UtilityCommand> UtilityCmds);
+    void pushCommands(Context ctx, std::vector<int> actuatorIDs, std::vector<UtilityCommands::UtilityCommand> UtilityCmds);
 
     /**
      * @brief finds the position of the utilityCmd in the utility pool by its ID. 

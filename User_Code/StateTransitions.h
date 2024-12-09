@@ -1,6 +1,7 @@
-#include "Context.h"
-#include "State.h"
-#include "Condition.h"
+#pragma once
+#include "../Library/Context.h"
+#include "../Library/State.h"
+#include "../Library/Condition.h"
 // Flight Transitions -----------------------------------------------------------------------------
     /**
      * @brief the state that comes a bit before launch

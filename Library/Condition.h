@@ -2,15 +2,9 @@
 
 #include "Context.h"
 
-#define AND(a , b) a && b
+#define GET(a) __ctx->a
+#define CONDITION(a) [](const Context* __ctx) -> bool{return a;}
 
-#define OR(a , b) a || a
-
-#define LESSTHAN(a , b) (a < b)
-
-#define MORETHAN(a , b) (a > b)
-
-#define CONDITION(a) [](Context ctx) -> bool{return a;}
 
 /*
 - Sub

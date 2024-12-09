@@ -1,6 +1,6 @@
-#include "ActuatorCommands.h"
+#include "../ActuatorCommands.h"
 
-void flip(){
+void ActuatorCommands::flip(){
 
 
 }

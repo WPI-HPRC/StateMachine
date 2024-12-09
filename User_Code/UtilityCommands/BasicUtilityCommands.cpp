@@ -1,14 +1,14 @@
-#include "UtilityCommands.h"
+#include "../UtilityCommands.h"
 
-void timerFunction(TimerCommand timerCommand){
+void UtilityCommands::timerFunction(const UtilityCommand* timerCommand){
     
 }
 
-void debouncerFunction(DebouncerCommand debouncerCommand){
+void UtilityCommands::debouncerFunction(const UtilityCommand* debouncerCommand){
     
 }
 
-void genericFunction(UtilityCommand genericCommand){
+void UtilityCommands::genericFunction(const UtilityCommand* genericCommand){
 
 }
 

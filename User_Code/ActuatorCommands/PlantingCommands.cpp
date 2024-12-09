@@ -1,17 +1,17 @@
-#include "ActuatorCommands.h"
+#include "../ActuatorCommands.h"
 
-void openSolenoids(){
+void ActuatorCommands::openSolenoids(){
     
 }
 
-void closeSolenoids(){
+void ActuatorCommands::closeSolenoids(){
 
 }
 
-void expelSolids(){
+void ActuatorCommands::expelSolids(){
 
 }
 
-void openSolidsDoor(){
+void ActuatorCommands::openSolidsDoor(){
 
 }

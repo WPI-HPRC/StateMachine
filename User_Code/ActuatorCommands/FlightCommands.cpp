@@ -1,6 +1,7 @@
-#include "ActuatorCommands.h"
+
+#include "../ActuatorCommands.h"
 
 
-void explode(){
+void ActuatorCommands::explode(){
 
 }
