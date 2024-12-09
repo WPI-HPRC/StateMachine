@@ -4,6 +4,7 @@
 #include "UtilityCommands.h"
 #include <initializer_list>
 #include <list>
+#include <functional>
 
 using F = bool(void);
 
@@ -20,14 +21,14 @@ template <typename C>
 State(std::initializer_list<Transition<C>>) -> State<C>;
 
 template <typename C> struct Transition {
-  F* condPointer;
+  std::function<bool(Context ctx)> cond;
   std::list<int> actuatorPushCmds;
   std::list<int> actuatorPopCmds;
   std::list<UtilityCommand> utilityPushCmds;
   std::list<int> utilityPopCmds;
   State<C> *targetState;
 
-  Transition<C>(F* condPointer, std::list<int> actuatorPushCmds,
+  Transition<C>(std::function<bool(Context ctx)> cond, std::list<int> actuatorPushCmds,
                 std::list<int> actuatorPopCmds,
                 std::list<UtilityCommand> utilityPushCmds,
                 std::list<int> utilityPopCmds,
@@ -38,7 +39,7 @@ template <typename C> struct Transition {
 };
 
 template <typename C>
-Transition(F*, std::list<int>,
+Transition(std::function<bool(Context ctx)>, std::list<int>,
            std::list<int>, std::list<UtilityCommand>,
            std::list<int>, State<C> *) -> Transition<C>;
 

@@ -2,7 +2,6 @@
 
 #include "Context.h"
 
-
 #define AND(a , b) a && b
 
 #define OR(a , b) a || a
@@ -11,9 +10,7 @@
 
 #define MORETHAN(a , b) (a > b)
 
-
-#define CONDITION(name, a) bool  name ## function() {return a;} \
-                           bool (*name)() = name ## function;
+#define CONDITION(a) [](Context ctx) -> bool{return a;}
 
 /*
 - Sub

@@ -1,28 +1,9 @@
 #pragma once
-#include "UtilityCommands.cpp"
+#include "BasicUtilityCommands.cpp"
 #include "Condition.h"
 #include "Context.h"
-
-using F = bool(void);
-using L = void(UtilityCommand);
-
-#undef KEY
-#undef MAP
-#define KEY(name) constexpr int name  ## Type = __COUNTER__;
-#define MAP(name) {name ## Type, & ## name ## Function},
-
-#define CREATE_UTILITY_COMMANDS(utility_commands) \
-utility_commands(KEY);                            \
-static std::map<int, void(*)(UtilityCommand)> UtilityCommandMap{        \
-utility_commands(MAP)                             \
-};
-
-#define UTILITYCOMMANDS(Z)    \
-Z(generic)            \
-Z(timer)              \
-Z(debouncer)
-
-CREATE_UTILITY_COMMANDS(UTILITYCOMMANDS)
+#include "EKF.cpp"
+#include "PID.cpp"
 
 struct UtilityCommand {
   int id;
