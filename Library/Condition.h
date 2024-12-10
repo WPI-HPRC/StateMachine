@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Context.h"
-
 #define GET(a) __ctx->a
 #define CONDITION(a) [](const Context* __ctx) -> bool{return a;}
 

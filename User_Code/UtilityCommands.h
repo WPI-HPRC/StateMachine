@@ -1,30 +1,27 @@
 #pragma once
-#include "../Library/Context.h"
+
 #include "../Library/Condition.h"
+#include "../Library/Fuckyou.h"
+#include "../Library/Context.h"
 #include <functional>
 
-namespace UtilityCommands {
+namespace moreUtilityCommands {
+  using namespace UtilityCommands;
 
-
-  struct UtilityCommand {
-    int id;
-    int TypeID;
-    UtilityCommand(int id) : id(id) {TypeID = genericType;}
-  };
-  void genericFunction(const UtilityCommand* genericCommand);
-  struct TimerCommand : public UtilityCommand {
+  void genericFunction(const UtilityCommands::UtilityCommand* genericCommand);
+  struct TimerCommand : public UtilityCommands::UtilityCommand {
     long startTime;
     TimerCommand(int id, long time)
-        : UtilityCommand(1 << 31 & id), startTime(time) {TypeID = timerType;}
+        : UtilityCommands::UtilityCommand(1 << 31 & id), startTime(time) {TypeID = timerType;}
   };
-  void timerFunction(const UtilityCommand* timerCommand);
-  struct DebouncerCommand : public UtilityCommand {
+  void timerFunction(const UtilityCommands::UtilityCommand* timerCommand);
+  struct DebouncerCommand : public UtilityCommands::UtilityCommand {
     int counts;
     std::function<bool(const Context*)> cond;
     DebouncerCommand(int id, int counts, std::function<bool(const Context*)> cond)
-        : UtilityCommand(id), counts(counts), cond(cond) {TypeID = debouncerType;}
+        : UtilityCommands::UtilityCommand(id), counts(counts), cond(cond) {TypeID = debouncerType;}
   };
-  void debouncerFunction(const UtilityCommand* debouncerCommand);
+  void debouncerFunction(const UtilityCommands::UtilityCommand* debouncerCommand);
 
   /*
   template <typename C>
